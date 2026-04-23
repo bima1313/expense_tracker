@@ -3,5 +3,5 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 abstract class NoteRepository {
-  Future<Note> getNotes();
+  Future<List<Note>> getNotes();
 }

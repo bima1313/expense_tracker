@@ -6,7 +6,7 @@ class GetNotesUsecase {
 
   const GetNotesUsecase({required this.repository});
 
-  Future<Iterable<Note>> call() async {
+  Future<List<Note>> call() async {
     return await repository.getNotes();
   }
 }

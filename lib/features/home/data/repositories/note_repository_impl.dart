@@ -7,7 +7,7 @@ class NoteRepositoryImpl implements NoteRepository {
 
   const NoteRepositoryImpl({required this.localDataSource});
   @override
-  Future<Iterable<NoteModel>> getNotes() async {
+  Future<List<NoteModel>> getNotes() async {
     final data = await localDataSource.getNotes();
 
     return data;
