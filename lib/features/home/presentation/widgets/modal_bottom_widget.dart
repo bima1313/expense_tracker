@@ -1,0 +1,130 @@
+import 'package:expense_tracker/core/themes/app_colors.dart';
+import 'package:expense_tracker/core/themes/app_theme.dart';
+import 'package:expense_tracker/features/home/presentation/getx/controllers/category_selected_controller.dart';
+import 'package:expense_tracker/features/home/presentation/widgets/amount_input.dart';
+import 'package:expense_tracker/features/home/presentation/widgets/category_item.dart';
+import 'package:expense_tracker/features/home/presentation/widgets/custom_radio_category.dart';
+import 'package:expense_tracker/features/home/presentation/widgets/custom_text_field.dart';
+import 'package:expense_tracker/features/home/presentation/widgets/modal_header.dart';
+import 'package:expense_tracker/shared/domain/entities/category_type.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
+import 'package:get/get.dart';
+
+class ModalBottomWidget extends StatefulWidget {
+  const ModalBottomWidget({super.key});
+
+  @override
+  State<ModalBottomWidget> createState() => _ModalBottomWidgetState();
+}
+
+class _ModalBottomWidgetState extends State<ModalBottomWidget> {
+  final TextEditingController _amountController = TextEditingController();
+  final TextEditingController _noteController = TextEditingController();
+
+  @override
+  void dispose() {
+    _amountController.dispose();
+    _noteController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final controller = Get.put(CategorySelectedController());
+    return Container(
+      height: MediaQuery.of(context).size.height * 0.85,
+      decoration: BoxDecoration(
+        color: AppColors.windChime,
+        borderRadius: const .directional(
+          topStart: .circular(32.0),
+          topEnd: .circular(32.0),
+        ),
+      ),
+      child: Padding(
+        padding: const .all(32.0),
+        child: Column(
+          spacing: 16.0,
+          crossAxisAlignment: .start,
+          children: [
+            const ModalHeader(),
+            Container(
+              decoration: BoxDecoration(
+                color: const Color.fromARGB(255, 199, 198, 198),
+                borderRadius: .all(.circular(16.0)),
+              ),
+              child: Padding(
+                padding: const .all(32.0),
+                child: Stack(
+                  alignment: .centerStart,
+                  children: [
+                    AmountInput(controller: _amountController),
+                    Container(
+                      color: const Color.fromARGB(255, 199, 198, 198),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 14.0),
+                        child: Text(
+                          "Rp",
+                          style: Theme.of(context).textTheme.headlineMedium
+                              ?.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: .bold,
+                              ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Text(
+              "category".toUpperCase(),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: .w600),
+            ),
+            CustomRadioCategory(
+              onChanged: (value) {
+                controller.setCategory(name: value);
+              },
+              size: 80,
+              items: CategoryType.values.map((category) {
+                return CategoryItem(value: category);
+              }).toList(),
+            ),
+            Text(
+              "note".toUpperCase(),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: .w600),
+            ),
+            CustomTextField(
+              controller: _noteController,
+              hintText: "Add a description...",
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                fixedSize: Size(double.infinity, 50.0),
+              ),
+              onPressed: () {},
+              child: Row(
+                spacing: 8.0,
+                mainAxisAlignment: .center,
+                children: [Text("Save Entry"), Icon(Icons.check)],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+PreviewThemeData lightTheme() =>
+    PreviewThemeData(materialLight: AppTheme.lightTheme);
+@Preview(
+  size: Size(360, 800),
+  name: "Modal Bottom Widget Preview",
+  theme: lightTheme,
+)
+Widget modalBottomWidgetPreview() => const ModalBottomWidget();

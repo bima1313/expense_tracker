@@ -13,4 +13,5 @@ abstract class AppColors {
   static const Color slateBlue = Color(0xFF557C99);
   static const Color purpleBlue = Color(0xFF6A5ACD);
   static const Color slateGrey = Color(0xFF6D8196);
+  static const Color windChime = Color(0xFFE0E0E0);
 }

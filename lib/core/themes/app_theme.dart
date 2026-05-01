@@ -11,6 +11,7 @@ abstract class AppTheme {
       brightness: Brightness.light,
       textTheme: AppTypography.textTheme,
       primaryColor: AppColors.primary,
+      scaffoldBackgroundColor: AppColors.windChime,
       appBarTheme: AppBarThemeData(
         centerTitle: true,
         backgroundColor: Colors.transparent,
@@ -36,6 +37,22 @@ abstract class AppTheme {
       ),
       progressIndicatorTheme: ProgressIndicatorThemeData(
         color: AppColors.primary,
+      ),
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ButtonStyle(
+          shape: .all(
+            RoundedRectangleBorder(borderRadius: .all(.circular(16.0))),
+          ),
+          textStyle: .all(
+            const TextStyle(
+              fontSize: 14.0,
+              fontWeight: .bold,
+              letterSpacing: 1.5,
+            ),
+          ),
+          backgroundColor: .all(AppColors.primary),
+          foregroundColor: .all(Colors.white),
+        ),
       ),
     );
   }

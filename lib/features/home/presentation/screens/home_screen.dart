@@ -1,6 +1,7 @@
 import 'package:expense_tracker/core/themes/app_theme.dart';
 import 'package:expense_tracker/features/home/presentation/getx/bindings/home_binding.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/card_header.dart';
+import 'package:expense_tracker/features/home/presentation/widgets/modal_bottom_widget.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/note_list.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/time_widget.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Expense Tracker")),
       body: SingleChildScrollView(
         child: Padding(
           padding: const .all(16.0),
@@ -47,7 +47,15 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton.extended(
         icon: const Icon(Icons.mode_edit),
         label: const Text("New Note"),
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+            context: context,
+            builder: (context) {
+              return ModalBottomWidget();
+            },
+            isScrollControlled: true,
+          );
+        },
       ),
     );
   }
@@ -58,6 +66,7 @@ PreviewThemeData lightTheme() =>
 @Preview(size: Size(360, 800), name: "Home Screen Preview", theme: lightTheme)
 Widget homeScreenPreview() {
   return GetMaterialApp(
+    theme: AppTheme.lightTheme,
     getPages: [
       GetPage(
         name: "/",
