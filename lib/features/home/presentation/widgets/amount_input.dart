@@ -9,7 +9,7 @@ class AmountInput extends StatelessWidget {
   final TextEditingController controller;
   @override
   Widget build(BuildContext context) {
-    return Expanded(
+    return Positioned(
       child: TextField(
         textAlign: .center,
         cursorColor: AppColors.primary,
