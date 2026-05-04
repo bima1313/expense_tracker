@@ -1,0 +1,56 @@
+import 'package:expense_tracker/core/themes/app_theme.dart';
+import 'package:expense_tracker/features/history/presentation/screens/history_screen.dart';
+import 'package:expense_tracker/features/home/presentation/getx/bindings/home_binding.dart';
+import 'package:expense_tracker/features/home/presentation/screens/home_screen.dart';
+import 'package:expense_tracker/features/main_layout/getx/bindings/main_binding.dart';
+import 'package:expense_tracker/features/main_layout/getx/controllers/bottom_nav_controller.dart';
+
+import 'package:expense_tracker/features/main_layout/presentation/widgets/custom_navigation_bar.dart';
+import 'package:expense_tracker/features/main_layout/presentation/widgets/custom_navigation_bar_item.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/widget_previews.dart';
+import 'package:get/get.dart';
+
+class MainLayoutScreen extends GetView<BottomNavController> {
+  const MainLayoutScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Expense Tracker")),
+      body: GetBuilder<BottomNavController>(
+        builder: (controller) {
+          return IndexedStack(
+            index: controller.currentIndex,
+            children: [const HomeScreen(), const HistoryScreen()],
+          );
+        },
+      ),
+      bottomNavigationBar: CustomNavigationBar(
+        selectediconColor: Colors.white,
+        selectedlabelColor: Colors.white,
+        destinations: const [
+          CustomNavigationBarItem(icon: Icons.home, label: "Home"),
+          CustomNavigationBarItem(icon: Icons.history, label: "history"),
+        ],
+        onTap: (value) {
+          controller.navigationClick(selectedIndex: value);
+        },
+      ),
+    );
+  }
+}
+
+@Preview(size: Size(360, 800), name: "Main Layout Preview")
+Widget mainLayoutPreview() {
+  return GetMaterialApp(
+    theme: AppTheme.lightTheme,
+    getPages: [
+      GetPage(
+        name: "/",
+        page: () => const MainLayoutScreen(),
+        bindings: [MainBinding(), HomeBinding()],
+      ),
+    ],
+  );
+}
