@@ -2,9 +2,10 @@ import 'package:expense_tracker/shared/domain/entities/category_type.dart';
 import 'package:get/get.dart';
 
 class CategorySelectedController extends GetxController {
-  Rx<CategoryType> categoryName = CategoryType.dining.obs;
+  CategoryType categoryName = CategoryType.dining;
 
   void setCategory({required CategoryType name}) {
-    categoryName.value = name;
+    categoryName = name;
+    update();
   }
 }

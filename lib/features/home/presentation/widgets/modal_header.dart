@@ -1,6 +1,7 @@
 import 'package:expense_tracker/core/themes/app_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
+import 'package:get/get.dart';
 
 class ModalHeader extends StatelessWidget {
   const ModalHeader({super.key});
@@ -17,12 +18,7 @@ class ModalHeader extends StatelessWidget {
             fontWeight: .bold,
           ),
         ),
-        IconButton(
-          icon: Icon(Icons.close),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+        IconButton(icon: const Icon(Icons.close), onPressed: () => Get.back()),
       ],
     );
   }

@@ -21,6 +21,7 @@ class ModalBottomWidget extends StatefulWidget {
 class _ModalBottomWidgetState extends State<ModalBottomWidget> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
+  final controller = Get.put(CategorySelectedController());
 
   @override
   void dispose() {
@@ -31,9 +32,8 @@ class _ModalBottomWidgetState extends State<ModalBottomWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(CategorySelectedController());
     return Container(
-      height: MediaQuery.of(context).size.height * 0.85,
+      height: MediaQuery.of(context).size.height * 0.9,
       decoration: BoxDecoration(
         color: AppColors.windChime,
         borderRadius: const .directional(
@@ -46,6 +46,7 @@ class _ModalBottomWidgetState extends State<ModalBottomWidget> {
         child: Column(
           spacing: 16.0,
           crossAxisAlignment: .start,
+          mainAxisSize: .min,
           children: [
             const ModalHeader(),
             Container(
@@ -62,7 +63,7 @@ class _ModalBottomWidgetState extends State<ModalBottomWidget> {
                     Container(
                       color: const Color.fromARGB(255, 199, 198, 198),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 14.0),
+                        padding: const .symmetric(vertical: 14.0),
                         child: Text(
                           "Rp",
                           style: Theme.of(context).textTheme.headlineMedium
@@ -76,6 +77,16 @@ class _ModalBottomWidgetState extends State<ModalBottomWidget> {
                   ],
                 ),
               ),
+            ),
+            Text(
+              "note".toUpperCase(),
+              style: Theme.of(
+                context,
+              ).textTheme.bodyMedium?.copyWith(fontWeight: .w600),
+            ),
+            CustomTextField(
+              controller: _noteController,
+              hintText: "Add a description...",
             ),
             Text(
               "category".toUpperCase(),
@@ -92,22 +103,14 @@ class _ModalBottomWidgetState extends State<ModalBottomWidget> {
                 return CategoryItem(value: category);
               }).toList(),
             ),
-            Text(
-              "note".toUpperCase(),
-              style: Theme.of(
-                context,
-              ).textTheme.bodyMedium?.copyWith(fontWeight: .w600),
-            ),
-            CustomTextField(
-              controller: _noteController,
-              hintText: "Add a description...",
-            ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 fixedSize: Size(double.infinity, 50.0),
               ),
-              onPressed: () {},
-              child: Row(
+              onPressed: () {
+                Get.back();
+              },
+              child: const Row(
                 spacing: 8.0,
                 mainAxisAlignment: .center,
                 children: [Text("Save Entry"), Icon(Icons.check)],

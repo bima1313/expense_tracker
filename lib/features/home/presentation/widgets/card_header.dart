@@ -24,6 +24,7 @@ class CardHeader extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: .start,
+            mainAxisSize: .min,
             children: [
               Text(
                 title.toUpperCase(),

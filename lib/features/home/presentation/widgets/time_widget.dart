@@ -10,26 +10,29 @@ class TimeWidget extends GetView<RealTimeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      return Column(
-        crossAxisAlignment: .start,
-        children: [
-          Text(
-            "${controller.currentDate}",
-            style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-              color: AppColors.primary,
-              fontWeight: .bold,
+    return GetBuilder<RealTimeController>(
+      builder: (controller) {
+        return Column(
+          crossAxisAlignment: .start,
+          mainAxisSize: .min,
+          children: [
+            Text(
+              controller.currentDate,
+              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                color: AppColors.primary,
+                fontWeight: .bold,
+              ),
             ),
-          ),
-          Text(
-            "${controller.currentTime}",
-            style: Theme.of(
-              context,
-            ).textTheme.displaySmall?.copyWith(color: Colors.black),
-          ),
-        ],
-      );
-    });
+            Text(
+              controller.currentTime,
+              style: Theme.of(
+                context,
+              ).textTheme.displaySmall?.copyWith(color: Colors.black),
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 
@@ -39,7 +42,11 @@ Widget timeWidgetPreview() {
     getPages: [
       GetPage(
         name: "/",
-        page: () => const TimeWidget(),
+        page: () => Container(
+          width: 360,
+          color: Colors.white,
+          child: const TimeWidget(),
+        ),
         binding: HomeBinding(),
       ),
     ],

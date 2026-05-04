@@ -25,7 +25,7 @@ class NoteItem extends StatelessWidget {
     return Card(
       color: Colors.white,
       child: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const .all(16.0),
         child: Row(
           mainAxisAlignment: .spaceBetween,
           children: [
@@ -35,7 +35,7 @@ class NoteItem extends StatelessWidget {
                 borderRadius: const .all(.circular(24.0)),
               ),
               child: Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const .all(8.0),
                 child: Icon(category.icon, color: Colors.white),
               ),
             ),
@@ -44,6 +44,7 @@ class NoteItem extends StatelessWidget {
                 padding: const .only(left: 8.0),
                 child: Column(
                   crossAxisAlignment: .start,
+                  mainAxisSize: .min,
                   children: [
                     Text(
                       title,
@@ -62,7 +63,7 @@ class NoteItem extends StatelessWidget {
               ),
             ),
             Text(
-              "-${currency.format(amount)}",
+              currency.format(amount),
               style: Theme.of(context).textTheme.bodyLarge?.copyWith(
                 color: Colors.black,
                 fontWeight: .bold,

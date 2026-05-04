@@ -23,6 +23,7 @@ class NoteList extends GetView<GetNotesController> {
       } else {
         final notes = controller.getNotes;
         return Column(
+          mainAxisSize: .min,
           children: [
             Container(
               decoration: BoxDecoration(
@@ -32,6 +33,7 @@ class NoteList extends GetView<GetNotesController> {
               child: Padding(
                 padding: const .all(8.0),
                 child: ListView.builder(
+                  physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
                   itemCount: 3,
                   itemBuilder: (context, index) {

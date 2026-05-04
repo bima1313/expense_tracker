@@ -19,8 +19,9 @@ class HomeScreen extends StatelessWidget {
           padding: const .all(16.0),
           child: Column(
             crossAxisAlignment: .start,
+            mainAxisSize: .min,
             children: [
-              Text("current session".toUpperCase()),
+              const Text("CURRENT SESSION"),
               const TimeWidget(),
               const Padding(
                 padding: .symmetric(vertical: 16.0),
@@ -36,7 +37,7 @@ class HomeScreen extends StatelessWidget {
                       fontWeight: .bold,
                     ),
                   ),
-                  TextButton(child: Text("View All"), onPressed: () {}),
+                  TextButton(child: const Text("View All"), onPressed: () {}),
                 ],
               ),
               const NoteList(),
@@ -51,7 +52,7 @@ class HomeScreen extends StatelessWidget {
           showModalBottomSheet(
             context: context,
             builder: (context) {
-              return ModalBottomWidget();
+              return const ModalBottomWidget();
             },
             isScrollControlled: true,
           );
