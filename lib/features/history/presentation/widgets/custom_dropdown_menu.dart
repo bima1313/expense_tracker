@@ -25,7 +25,7 @@ class CustomDropdownMenu extends StatelessWidget {
           borderSide: .none,
           borderRadius: .all(.circular(32.0)),
         ),
-        fillColor: const Color.fromARGB(120, 156, 163, 175),
+        fillColor: const Color.fromARGB(120, 210, 212, 216),
       ),
       menuStyle: MenuStyle(
         shape: .all(

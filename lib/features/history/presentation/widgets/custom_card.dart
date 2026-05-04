@@ -34,8 +34,8 @@ class CustomCard extends StatelessWidget {
                     borderRadius: .all(.circular(32.0)),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Center(
+                    padding: const .all(10.0),
+                    child: const Center(
                       child: Icon(
                         Icons.calendar_month,
                         color: AppColors.primary,
@@ -74,8 +74,8 @@ class CustomCard extends StatelessWidget {
               spacing: 8.0,
               children: [
                 changeRate.contains("-")
-                    ? Icon(Icons.trending_down, color: Colors.red)
-                    : Icon(Icons.trending_up, color: Colors.green),
+                    ? const Icon(Icons.trending_down, color: Colors.red)
+                    : const Icon(Icons.trending_up, color: Colors.green),
                 Text(changeRate),
               ],
             ),

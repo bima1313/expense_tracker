@@ -23,12 +23,9 @@ class HistoryScreen extends StatelessWidget {
           spacing: 16.0,
           crossAxisAlignment: .start,
           children: [
-            Row(
+            const Row(
               spacing: 16.0,
-              children: [
-                Text("annual overview".toUpperCase()),
-                CustomDropdownMenu(),
-              ],
+              children: [Text("ANNUAL OVERVIEW"), CustomDropdownMenu()],
             ),
             Text(
               currency.format(84230),
@@ -77,7 +74,7 @@ PreviewThemeData lightTheme() =>
 )
 Widget histroyScreenPreview() {
   return Scaffold(
-    appBar: AppBar(title: Text("Expense Tracker")),
-    body: HistoryScreen(),
+    appBar: AppBar(title: const Text("Expense Tracker")),
+    body: const HistoryScreen(),
   );
 }

@@ -59,11 +59,11 @@ class Chart extends StatelessWidget {
               child: LineChart(
                 LineChartData(
                   borderData: FlBorderData(show: false),
-                  gridData: FlGridData(show: false),
+                  gridData: const FlGridData(show: false),
                   titlesData: FlTitlesData(
-                    topTitles: AxisTitles(),
-                    leftTitles: AxisTitles(),
-                    rightTitles: AxisTitles(),
+                    topTitles: const AxisTitles(),
+                    leftTitles: const AxisTitles(),
+                    rightTitles: const AxisTitles(),
                     bottomTitles: AxisTitles(
                       sideTitles: SideTitles(
                         showTitles: true,
@@ -109,17 +109,17 @@ class Chart extends StatelessWidget {
                   lineBarsData: [
                     LineChartBarData(
                       barWidth: 4.0,
-                      dotData: FlDotData(show: false),
+                      dotData: const FlDotData(show: false),
                       isStrokeCapRound: true,
                       color: AppColors.beauVert,
                       belowBarData: BarAreaData(
                         show: true,
-                        gradient: LinearGradient(
+                        gradient: const LinearGradient(
                           begin: .topCenter,
                           end: .bottomCenter,
                           colors: [
-                            const Color.fromARGB(100, 23, 97, 97),
-                            const Color.fromARGB(255, 206, 206, 206),
+                            Color.fromARGB(100, 23, 97, 97),
+                            Color.fromARGB(255, 206, 206, 206),
                           ],
                         ),
                       ),
