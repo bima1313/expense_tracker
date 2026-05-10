@@ -1,17 +1,26 @@
 # expense_tracker
 
-A new Flutter project.
+A simple and efficient mobile application built to help manage personal finances.
 
-## Getting Started
+## 🚀 Technologies Used
 
-This project is a starting point for a Flutter application.
+|    Technology    |    Purpose     |
+|   -------------  | -------------  | 
+| Flutter          | Cross-platform mobile framework. |
+| SQLite           | Local database for persistent storage. |
+| GetX             | State management, routing, and dependency injection. |
 
-A few resources to get you started if this is your first Flutter project:
+## 🏗️ Architecture
+This project implements Clean Architecture to ensure the code is scalable, testable, and easy to maintain. The codebase is divided into three main layers:
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+1. Data Layer: Handles data sources (SQLite), repositories implementation, and models.
+2. Domain Layer: Contains the core business logic, including entities and use cases.
+3. Presentation Layer: Manages the UI components and state logic using GetX Controllers.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## ✨ Features that will be in this application
+- Expense Tracking: Record and categorize daily spending.
+- History & Visualization: Fitur riwayat pengeluaran yang dilengkapi dengan grafik pengeluaran per tahun untuk memantau tren finansial.
+- Local Storage: All data is stored securely on your device using SQLite.
+- Localization (Multi-language): Support Indonesian and English Language
+- Dark Theme: Dark theme option for visual comfort.
+- Income Tracking: Added income recording feature so that the application does not only record expenses.
