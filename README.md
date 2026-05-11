@@ -1,4 +1,4 @@
-# expense_tracker
+# Expense Tracker
 
 A simple and efficient mobile application built to help manage personal finances.
 
@@ -19,7 +19,7 @@ This project implements Clean Architecture to ensure the code is scalable, testa
 
 ## ✨ Features that will be in this application
 - Expense Tracking: Record and categorize daily spending.
-- History & Visualization: Fitur riwayat pengeluaran yang dilengkapi dengan grafik pengeluaran per tahun untuk memantau tren finansial.
+- History & Visualization: The expense history feature is equipped with an annual expense graph to display financial trends.
 - Local Storage: All data is stored securely on your device using SQLite.
 - Localization (Multi-language): Support Indonesian and English Language
 - Dark Theme: Dark theme option for visual comfort.
