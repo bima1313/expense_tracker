@@ -14,4 +14,15 @@ class NoteModel extends Note {
       amount: json["amount"],
     );
   }
+
+  factory NoteModel.fromEntity(Note note) {
+    return NoteModel(
+      title: note.title,
+      category: note.category,
+      amount: note.amount,
+    );
+  }
+  Map<String, Object?> toMap() {
+    return {"title": title, "amount": amount, "category": category};
+  }
 }
