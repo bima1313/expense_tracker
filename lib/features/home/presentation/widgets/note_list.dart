@@ -1,7 +1,7 @@
 import 'package:expense_tracker/core/themes/app_colors.dart';
 import 'package:expense_tracker/core/themes/app_theme.dart';
-import 'package:expense_tracker/features/home/presentation/getx/bindings/home_binding.dart';
 import 'package:expense_tracker/features/home/presentation/getx/controllers/get_notes_controller.dart';
+import 'package:expense_tracker/features/home/presentation/getx/mocks/bindings/home_binding_preview.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/note_item.dart';
 import 'package:expense_tracker/shared/domain/entities/category_type.dart';
 import 'package:flutter/material.dart';
@@ -14,14 +14,11 @@ class NoteList extends GetView<GetNotesController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (controller.isLoading.value) {
-        return const Padding(
-          padding: .only(top: 32.0),
-          child: Center(child: CircularProgressIndicator()),
-        );
-      } else {
-        final notes = controller.getNotes;
+    return controller.obx(
+      onEmpty: const Center(child: Text("Data is Empty")),
+      onLoading: const Center(child: CircularProgressIndicator()),
+      onError: (error) => Center(child: Text(error!)),
+      (notes) {
         return Column(
           mainAxisSize: .min,
           children: [
@@ -35,14 +32,13 @@ class NoteList extends GetView<GetNotesController> {
                 child: ListView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   shrinkWrap: true,
-                  itemCount: 3,
+                  itemCount: notes!.length < 3 ? notes.length : 3,
                   itemBuilder: (context, index) {
                     final element = notes.elementAt(index);
                     return NoteItem(
                       title: element.title,
-                      simpleDescription: element.simpleDescription,
-                      category: CategoryType.values.byName(element.iconName),
-                      time: DateTime.now(),
+                      category: CategoryType.values.byName(element.category),
+                      time: element.dateTime,
                       amount: element.amount,
                     );
                   },
@@ -51,8 +47,8 @@ class NoteList extends GetView<GetNotesController> {
             ),
           ],
         );
-      }
-    });
+      },
+    );
   }
 }
 
@@ -62,7 +58,11 @@ PreviewThemeData lightTheme() =>
 Widget noteListWidgetPreview() {
   return GetMaterialApp(
     getPages: [
-      GetPage(name: "/", page: () => const NoteList(), binding: HomeBinding()),
+      GetPage(
+        name: "/",
+        page: () => const NoteList(),
+        binding: HomeBindingPreview(),
+      ),
     ],
   );
 }

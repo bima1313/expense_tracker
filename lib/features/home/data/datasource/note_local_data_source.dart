@@ -1,5 +1,7 @@
-import 'package:expense_tracker/core/constants/dummy_data.dart';
+import 'package:expense_tracker/core/databases/sqlite.dart';
+import 'package:expense_tracker/core/errors/exceptions.dart';
 import 'package:expense_tracker/features/home/data/models/note_model.dart';
+import 'package:expense_tracker/shared/utils/datetime_parser.dart';
 import 'package:flutter/foundation.dart';
 
 @immutable
@@ -7,15 +9,36 @@ abstract class NoteLocalDataSource {
   Future<List<NoteModel>> getNotes();
 }
 
-class MockLocalSourceImpl implements NoteLocalDataSource {
-  const MockLocalSourceImpl();
+class LocalDataSourceImpl implements NoteLocalDataSource {
+  final SQLite dbHelper;
+  const LocalDataSourceImpl({required this.dbHelper});
   @override
   Future<List<NoteModel>> getNotes() async {
-    await Future.delayed(const Duration(seconds: 2));
-    final data = dummyData["data"]!
-        .map((json) => NoteModel.fromJson(json))
-        .toList();
+    try {
+      final db = await dbHelper.getDb();
+      final datetimeNow = DateTime.now();
 
-    return data;
+      final data = await db.query(
+        'expense',
+        columns: ['title', 'amount', 'category', 'created_at'],
+        where: 'created_at LIKE ?',
+        whereArgs: ['${datetimeNow.toDbDate()}%'],
+        orderBy: 'created_at DESC',
+      );
+      return data.map((json) {
+        /* 
+        convert `created_at` from string into DateTime data type. In the result
+        the data inserting into model including `created_at` DateTime type.
+        */
+        final copyData = Map<String, dynamic>.from(json);
+        copyData.update(
+          'created_at',
+          (value) => DateTime.parse(value.toString()),
+        );
+        return NoteModel.fromJson(copyData);
+      }).toList();
+    } catch (e) {
+      throw DatabaseException(message: "can't fetch notes");
+    }
   }
 }

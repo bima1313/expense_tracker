@@ -9,19 +9,21 @@ class NoteItem extends StatelessWidget {
   const NoteItem({
     super.key,
     required this.title,
-    required this.simpleDescription,
     required this.category,
     required this.time,
     required this.amount,
   });
   final String title;
-  final String simpleDescription;
   final CategoryType category;
   final DateTime time;
   final double amount;
   @override
   Widget build(BuildContext context) {
-    final NumberFormat currency = NumberFormat.currency(symbol: "\$");
+    final NumberFormat currency = NumberFormat.currency(
+      decimalDigits: 0,
+      locale: "id_ID",
+      symbol: "Rp.",
+    );
     return Card(
       color: Colors.white,
       child: Padding(
@@ -54,9 +56,10 @@ class NoteItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "${time.toHour()}· $simpleDescription",
+                      "${time.toHour()}· ${category.name}",
                       overflow: .ellipsis,
                       maxLines: 1,
+                      style: TextStyle(color: Colors.black, fontWeight: .bold),
                     ),
                   ],
                 ),
@@ -79,7 +82,6 @@ class NoteItem extends StatelessWidget {
 @Preview(name: "Note Item Widget")
 Widget noteItemWidgetPreview() => NoteItem(
   title: "Artisan Roasters",
-  simpleDescription: "Clothing",
   category: CategoryType.dining,
   time: DateTime.now(),
   amount: 13.40,

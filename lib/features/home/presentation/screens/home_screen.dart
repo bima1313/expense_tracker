@@ -1,5 +1,5 @@
 import 'package:expense_tracker/core/themes/app_theme.dart';
-import 'package:expense_tracker/features/home/presentation/getx/bindings/home_binding.dart';
+import 'package:expense_tracker/features/home/presentation/getx/mocks/bindings/home_binding_preview.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/card_header.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/modal_bottom_widget.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/note_list.dart';
@@ -25,7 +25,7 @@ class HomeScreen extends StatelessWidget {
               const TimeWidget(),
               const Padding(
                 padding: .symmetric(vertical: 16.0),
-                child: CardHeader(title: "Today's Outflow", amount: 142.50),
+                child: CardHeader(title: "Today's Outflow"),
               ),
               Row(
                 mainAxisAlignment: .spaceBetween,
@@ -72,7 +72,7 @@ Widget homeScreenPreview() {
       GetPage(
         name: "/",
         page: () => const HomeScreen(),
-        binding: HomeBinding(),
+        binding: HomeBindingPreview(),
       ),
     ],
   );

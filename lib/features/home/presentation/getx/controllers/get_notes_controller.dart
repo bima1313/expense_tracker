@@ -1,23 +1,35 @@
 import 'package:expense_tracker/features/home/domain/entities/note.dart';
 import 'package:expense_tracker/features/home/domain/usecase/get_notes_usecase.dart';
+import 'package:expense_tracker/features/home/presentation/utils/list_note_extension.dart';
 import 'package:get/get.dart';
 
-class GetNotesController extends GetxController {
+class GetNotesController extends GetxController with StateMixin<List<Note>> {
   final GetNotesUsecase getNotesUsecase;
-  RxList<Note> getNotes = <Note>[].obs;
-  RxBool isLoading = false.obs;
   GetNotesController({required this.getNotesUsecase});
+  final RxDouble _totalAmount = 0.0.obs;
+  double get totalAmount => _totalAmount.value;
 
   Future<void> getData() async {
-    isLoading.value = true;
+    change(null, status: .loading());
     final data = await getNotesUsecase();
-    getNotes.value = data;
-    isLoading.value = false;
+    data.fold(
+      (failure) {
+        change(null, status: .error(failure.message));
+      },
+      (data) {
+        if (data.isEmpty) {
+          change(null, status: .empty());
+        } else {
+          _totalAmount.value = data.calculateAmount;
+          change(data, status: .success());
+        }
+      },
+    );
   }
 
   @override
   void onInit() {
-    getData();
     super.onInit();
+    getData();
   }
 }
