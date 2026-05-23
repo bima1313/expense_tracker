@@ -10,9 +10,9 @@ abstract class NoteLocalDataSource {
   Future<void> createNote({required NoteModel note});
 }
 
-class LocalDataSourceImpl implements NoteLocalDataSource {
+class NoteLocalDataSourceImpl implements NoteLocalDataSource {
   final SQLite dbHelper;
-  const LocalDataSourceImpl({required this.dbHelper});
+  const NoteLocalDataSourceImpl({required this.dbHelper});
   @override
   Future<List<NoteModel>> getNotes() async {
     try {

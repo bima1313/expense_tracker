@@ -9,8 +9,8 @@ abstract class NoteLocalDataSourcePreview {
   Future<void> createNote({required NoteModel note});
 }
 
-class MockLocalSourceImplPreview implements NoteLocalDataSourcePreview {
-  const MockLocalSourceImplPreview();
+class MockNoteLocalDataSourceImplPreview implements NoteLocalDataSourcePreview {
+  const MockNoteLocalDataSourceImplPreview();
   @override
   Future<List<NoteModel>> getNotes() async {
     await Future.delayed(const Duration(seconds: 2));

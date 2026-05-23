@@ -10,12 +10,12 @@ void main() {
     sqfliteFfiInit();
     databaseFactory = databaseFactoryFfi;
   });
-  group("Datasouce test", () {
+  group("Note local datasouce test", () {
     late SQLite db;
-    late LocalDataSourceImpl localDataSourceImpl;
+    late NoteLocalDataSourceImpl localDataSourceImpl;
     setUp(() async {
       db = SQLite(dbPath: inMemoryDatabasePath);
-      localDataSourceImpl = LocalDataSourceImpl(dbHelper: db);
+      localDataSourceImpl = NoteLocalDataSourceImpl(dbHelper: db);
     });
     tearDown(() async => await db.closeDb());
     test('Fetching notes success but return the data is empty', () async {

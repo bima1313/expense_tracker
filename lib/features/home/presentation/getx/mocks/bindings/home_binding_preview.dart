@@ -11,7 +11,9 @@ import 'package:get/get.dart';
 class HomeBindingPreview extends Bindings {
   @override
   void dependencies() {
-    Get.lazyPut<NoteLocalDataSourcePreview>(() => MockLocalSourceImplPreview());
+    Get.lazyPut<NoteLocalDataSourcePreview>(
+      () => MockNoteLocalDataSourceImplPreview(),
+    );
     Get.lazyPut<NoteRepository>(
       () => NoteRepositoryImplPreview(localDataSource: Get.find()),
     );

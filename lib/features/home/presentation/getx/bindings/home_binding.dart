@@ -14,7 +14,7 @@ class HomeBinding extends Bindings {
   void dependencies() {
     Get.lazyPut(() => SQLite());
     Get.lazyPut<NoteLocalDataSource>(
-      () => LocalDataSourceImpl(dbHelper: Get.find()),
+      () => NoteLocalDataSourceImpl(dbHelper: Get.find()),
     );
     Get.lazyPut<NoteRepository>(
       () => NoteRepositoryImpl(localDataSource: Get.find()),
