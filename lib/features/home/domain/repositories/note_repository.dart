@@ -6,4 +6,5 @@ import 'package:fpdart/fpdart.dart';
 @immutable
 abstract class NoteRepository {
   Future<Either<Failure, List<Note>>> getNotes();
+  Future<Either<Failure, void>> createNote({required Note note});
 }

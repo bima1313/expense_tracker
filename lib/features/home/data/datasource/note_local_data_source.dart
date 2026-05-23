@@ -7,6 +7,7 @@ import 'package:flutter/foundation.dart';
 @immutable
 abstract class NoteLocalDataSource {
   Future<List<NoteModel>> getNotes();
+  Future<void> createNote({required NoteModel note});
 }
 
 class LocalDataSourceImpl implements NoteLocalDataSource {
@@ -39,6 +40,16 @@ class LocalDataSourceImpl implements NoteLocalDataSource {
       }).toList();
     } catch (e) {
       throw DatabaseException(message: "can't fetch notes");
+    }
+  }
+
+  @override
+  Future<void> createNote({required NoteModel note}) async {
+    try {
+      final db = await dbHelper.getDb();
+      await db.insert("expense", note.toMap());
+    } catch (e) {
+      throw DatabaseException(message: "can't save note");
     }
   }
 }

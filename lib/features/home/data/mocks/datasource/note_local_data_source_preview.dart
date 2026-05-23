@@ -6,6 +6,7 @@ import 'package:flutter/foundation.dart';
 @immutable
 abstract class NoteLocalDataSourcePreview {
   Future<List<NoteModel>> getNotes();
+  Future<void> createNote({required NoteModel note});
 }
 
 class MockLocalSourceImplPreview implements NoteLocalDataSourcePreview {
@@ -27,5 +28,10 @@ class MockLocalSourceImplPreview implements NoteLocalDataSourcePreview {
     } catch (e) {
       throw DatabaseException(message: "Can't Fetch Data");
     }
+  }
+
+  @override
+  Future<void> createNote({required NoteModel note}) {
+    throw UnimplementedError();
   }
 }

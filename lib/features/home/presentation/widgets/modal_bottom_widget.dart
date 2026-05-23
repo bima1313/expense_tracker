@@ -1,8 +1,10 @@
 import 'package:expense_tracker/core/themes/app_colors.dart';
 import 'package:expense_tracker/core/themes/app_theme.dart';
 import 'package:expense_tracker/features/home/presentation/getx/controllers/category_selected_controller.dart';
+import 'package:expense_tracker/features/home/presentation/getx/mocks/bindings/home_binding_preview.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/amount_input.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/category_item.dart';
+import 'package:expense_tracker/features/home/presentation/widgets/create_note_button.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/custom_radio_category.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/custom_text_field.dart';
 import 'package:expense_tracker/features/home/presentation/widgets/modal_header.dart';
@@ -22,7 +24,6 @@ class _ModalBottomWidgetState extends State<ModalBottomWidget> {
   final TextEditingController _amountController = TextEditingController();
   final TextEditingController _noteController = TextEditingController();
   final controller = Get.put(CategorySelectedController());
-
   @override
   void dispose() {
     _amountController.dispose();
@@ -32,6 +33,7 @@ class _ModalBottomWidgetState extends State<ModalBottomWidget> {
 
   @override
   Widget build(BuildContext context) {
+    // final categoryName = controller.categoryName;
     return Container(
       height: MediaQuery.of(context).size.height * 0.9,
       decoration: BoxDecoration(
@@ -94,27 +96,20 @@ class _ModalBottomWidgetState extends State<ModalBottomWidget> {
                 context,
               ).textTheme.bodyMedium?.copyWith(fontWeight: .w600),
             ),
-            CustomRadioCategory(
-              onChanged: (value) {
-                controller.setCategory(name: value);
-              },
-              size: 80,
-              items: CategoryType.values.map((category) {
-                return CategoryItem(value: category);
-              }).toList(),
+            Center(
+              child: CustomRadioCategory(
+                onChanged: (value) {
+                  controller.setCategory(name: value);
+                },
+                size: 80,
+                items: CategoryType.values.map((category) {
+                  return CategoryItem(value: category);
+                }).toList(),
+              ),
             ),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                fixedSize: Size(double.infinity, 50.0),
-              ),
-              onPressed: () {
-                Get.back();
-              },
-              child: const Row(
-                spacing: 8.0,
-                mainAxisAlignment: .center,
-                children: [Text("Save Entry"), Icon(Icons.check)],
-              ),
+            CreateNoteButton(
+              title: _noteController.text,
+              amount: _amountController.text,
             ),
           ],
         ),
@@ -130,4 +125,15 @@ PreviewThemeData lightTheme() =>
   name: "Modal Bottom Widget Preview",
   theme: lightTheme,
 )
-Widget modalBottomWidgetPreview() => const ModalBottomWidget();
+Widget modalBottomWidgetPreview() {
+  return GetMaterialApp(
+    theme: AppTheme.lightTheme,
+    getPages: [
+      GetPage(
+        name: "/",
+        page: () => const ModalBottomWidget(),
+        binding: HomeBindingPreview(),
+      ),
+    ],
+  );
+}
