@@ -1,5 +1,6 @@
 import 'package:expense_tracker/core/themes/app_colors.dart';
 import 'package:expense_tracker/core/themes/app_theme.dart';
+import 'package:expense_tracker/features/history/presentation/utils/change_rate_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 import 'package:intl/intl.dart';
@@ -73,9 +74,10 @@ class CustomCard extends StatelessWidget {
             Row(
               spacing: 8.0,
               children: [
-                changeRate.contains("-")
-                    ? const Icon(Icons.trending_down, color: Colors.red)
-                    : const Icon(Icons.trending_up, color: Colors.green),
+                changeRate.setChangeRateIcon,
+                // changeRate.contains("-")
+                //     ? const Icon(Icons.trending_down, color: Colors.red)
+                //     : const Icon(Icons.trending_up, color: Colors.green),
                 Text(changeRate),
               ],
             ),

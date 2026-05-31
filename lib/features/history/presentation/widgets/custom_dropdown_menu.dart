@@ -1,64 +1,62 @@
 import 'package:expense_tracker/core/themes/app_colors.dart';
 import 'package:expense_tracker/core/themes/app_theme.dart';
+import 'package:expense_tracker/features/history/presentation/getx/controllers/get_total_controller.dart';
+import 'package:expense_tracker/features/history/presentation/getx/controllers/get_years_controller.dart';
+import 'package:expense_tracker/features/history/presentation/getx/controllers/histories_data_controller.dart';
+import 'package:expense_tracker/features/history/presentation/getx/mocks/bindings/history_binding_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
+import 'package:get/get.dart';
 
 class CustomDropdownMenu extends StatelessWidget {
   const CustomDropdownMenu({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final dates = [2022, 2023, 2024];
-    return DropdownMenu(
-      textAlign: .center,
-      textStyle: TextStyle(
-        fontSize: 14.0,
-        color: AppColors.primary,
-        fontWeight: .bold,
-      ),
-      initialSelection: dates[0],
-      selectOnly: true,
-      inputDecorationTheme: InputDecorationTheme(
-        isCollapsed: true,
-        filled: true,
-        border: OutlineInputBorder(
-          borderSide: .none,
-          borderRadius: .all(.circular(32.0)),
-        ),
-        fillColor: const Color.fromARGB(120, 210, 212, 216),
-      ),
-      menuStyle: MenuStyle(
-        shape: .all(
-          const RoundedRectangleBorder(borderRadius: .all(.circular(16.0))),
-        ),
-        visualDensity: VisualDensity.standard,
-      ),
-      dropdownMenuEntries: [
-        DropdownMenuEntry(
-          value: dates[0],
-          label: dates[0].toString(),
-          style: ButtonStyle(
-            foregroundColor: .all(AppColors.primary),
-            textStyle: .all(TextStyle(fontWeight: .bold)),
+    return GetBuilder<GetYearsController>(
+      builder: (controller) {
+        return DropdownMenu(
+          textAlign: .center,
+          textStyle: TextStyle(
+            fontSize: 14.0,
+            color: AppColors.primary,
+            fontWeight: .bold,
           ),
-        ),
-        DropdownMenuEntry(
-          value: dates[1],
-          label: dates[1].toString(),
-          style: ButtonStyle(
-            foregroundColor: .all(AppColors.primary),
-            textStyle: .all(TextStyle(fontWeight: .bold)),
+          initialSelection: controller.years.last,
+          selectOnly: true,
+          inputDecorationTheme: InputDecorationTheme(
+            isCollapsed: true,
+            filled: true,
+            border: OutlineInputBorder(
+              borderSide: .none,
+              borderRadius: .all(.circular(32.0)),
+            ),
+            fillColor: const Color.fromARGB(120, 210, 212, 216),
           ),
-        ),
-        DropdownMenuEntry(
-          value: dates[2],
-          label: dates[2].toString(),
-          style: ButtonStyle(
-            foregroundColor: .all(AppColors.primary),
-            textStyle: .all(TextStyle(fontWeight: .bold)),
+          menuStyle: MenuStyle(
+            shape: .all(
+              const RoundedRectangleBorder(borderRadius: .all(.circular(16.0))),
+            ),
+            visualDensity: VisualDensity.standard,
           ),
-        ),
-      ],
+          dropdownMenuEntries: controller.years.map<DropdownMenuEntry>((item) {
+            return DropdownMenuEntry(
+              value: item,
+              label: item.toString(),
+              style: ButtonStyle(
+                foregroundColor: .all(AppColors.primary),
+                textStyle: .all(TextStyle(fontWeight: .bold)),
+              ),
+            );
+          }).toList(),
+          onSelected: (value) {
+            final controller = Get.find<HistoriesDataController>();
+            final totalController = Get.find<GetTotalController>();
+            controller.getData(year: value);
+            totalController.getTotal(year: value);
+          },
+        );
+      },
     );
   }
 }
@@ -71,10 +69,19 @@ PreviewThemeData lightTheme() =>
   theme: lightTheme,
 )
 Widget customDropdownMenu() {
-  return const Scaffold(
-    body: Padding(
-      padding: EdgeInsets.all(16.0),
-      child: Align(alignment: .topCenter, child: CustomDropdownMenu()),
-    ),
+  return GetMaterialApp(
+    theme: AppTheme.lightTheme,
+    getPages: [
+      GetPage(
+        name: "/",
+        page: () => const Scaffold(
+          body: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Align(alignment: .topCenter, child: CustomDropdownMenu()),
+          ),
+        ),
+        binding: HistoryBindingPreview(),
+      ),
+    ],
   );
 }

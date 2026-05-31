@@ -1,4 +1,5 @@
 import 'package:expense_tracker/core/themes/app_theme.dart';
+import 'package:expense_tracker/features/history/presentation/getx/bindings/history_binding.dart';
 import 'package:expense_tracker/features/home/presentation/getx/bindings/home_binding.dart';
 import 'package:expense_tracker/features/main_layout/getx/bindings/main_binding.dart';
 import 'package:expense_tracker/features/main_layout/presentation/screens/main_layout_screen.dart';
@@ -18,7 +19,7 @@ class App extends StatelessWidget {
         GetPage(
           name: "/",
           page: () => const MainLayoutScreen(),
-          bindings: [MainBinding(), HomeBinding()],
+          bindings: [MainBinding(), HomeBinding(), HistoryBinding()],
         ),
       ],
     );

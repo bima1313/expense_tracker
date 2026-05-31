@@ -1,10 +1,10 @@
 import 'package:expense_tracker/core/themes/app_theme.dart';
+import 'package:expense_tracker/features/history/presentation/getx/mocks/bindings/history_binding_preview.dart';
 import 'package:expense_tracker/features/history/presentation/screens/history_screen.dart';
-import 'package:expense_tracker/features/home/presentation/getx/bindings/home_binding.dart';
+import 'package:expense_tracker/features/home/presentation/getx/mocks/bindings/home_binding_preview.dart';
 import 'package:expense_tracker/features/home/presentation/screens/home_screen.dart';
 import 'package:expense_tracker/features/main_layout/getx/bindings/main_binding.dart';
 import 'package:expense_tracker/features/main_layout/getx/controllers/bottom_nav_controller.dart';
-
 import 'package:expense_tracker/features/main_layout/presentation/widgets/custom_navigation_bar.dart';
 import 'package:expense_tracker/features/main_layout/presentation/widgets/custom_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
@@ -49,7 +49,11 @@ Widget mainLayoutPreview() {
       GetPage(
         name: "/",
         page: () => const MainLayoutScreen(),
-        bindings: [MainBinding(), HomeBinding()],
+        bindings: [
+          MainBinding(),
+          HomeBindingPreview(),
+          HistoryBindingPreview(),
+        ],
       ),
     ],
   );

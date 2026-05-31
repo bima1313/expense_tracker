@@ -1,13 +1,21 @@
 import 'package:expense_tracker/core/themes/app_colors.dart';
 import 'package:expense_tracker/core/themes/app_theme.dart';
+import 'package:expense_tracker/features/history/domain/entities/history.dart';
+import 'package:expense_tracker/features/history/presentation/utils/month_parser.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widget_previews.dart';
 
 class Chart extends StatelessWidget {
-  const Chart({super.key, required this.title, required this.label});
+  const Chart({
+    super.key,
+    required this.title,
+    required this.label,
+    required this.data,
+  });
   final String title;
   final String label;
+  final List<History> data;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,90 +64,74 @@ class Chart extends StatelessWidget {
             ),
             SizedBox(
               height: MediaQuery.of(context).size.height / 4,
-              child: LineChart(
-                LineChartData(
-                  borderData: FlBorderData(show: false),
-                  gridData: const FlGridData(show: false),
-                  titlesData: FlTitlesData(
-                    topTitles: const AxisTitles(),
-                    leftTitles: const AxisTitles(),
-                    rightTitles: const AxisTitles(),
-                    bottomTitles: AxisTitles(
-                      sideTitles: SideTitles(
-                        showTitles: true,
-                        interval: 3,
-                        reservedSize: 30,
-                        getTitlesWidget: (value, meta) {
-                          String text = switch (value.toInt()) {
-                            1 => "Jan",
-                            2 => "Feb",
-                            3 => "March",
-                            4 => "April",
-                            5 => "May",
-                            6 => "June",
-                            7 => "July",
-                            8 => "August",
-                            9 => "Sep",
-                            10 => "Oct",
-                            11 => "Nov",
-                            12 => "Des",
-                            _ => "",
-                          };
-                          return SideTitleWidget(
-                            meta: meta,
-                            child: Text(
-                              text,
-                              style: Theme.of(context).textTheme.labelLarge
-                                  ?.copyWith(
-                                    color: const Color.fromARGB(
-                                      255,
-                                      34,
-                                      34,
-                                      34,
-                                    ),
-                                    fontWeight: .w600,
-                                    letterSpacing: 1.0,
-                                  ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                  lineBarsData: [
-                    LineChartBarData(
-                      barWidth: 4.0,
-                      dotData: const FlDotData(show: false),
-                      isStrokeCapRound: true,
-                      color: AppColors.beauVert,
-                      belowBarData: BarAreaData(
-                        show: true,
-                        gradient: const LinearGradient(
-                          begin: .topCenter,
-                          end: .bottomCenter,
-                          colors: [
-                            Color.fromARGB(100, 23, 97, 97),
-                            Color.fromARGB(255, 206, 206, 206),
-                          ],
+              child: Padding(
+                padding: const .symmetric(horizontal: 8.0),
+                child: LineChart(
+                  LineChartData(
+                    borderData: FlBorderData(show: false),
+                    gridData: const FlGridData(show: false),
+                    titlesData: FlTitlesData(
+                      topTitles: const AxisTitles(),
+                      leftTitles: const AxisTitles(),
+                      rightTitles: const AxisTitles(),
+                      bottomTitles: AxisTitles(
+                        sideTitles: SideTitles(
+                          showTitles: true,
+                          interval: 3,
+                          reservedSize: 46,
+                          getTitlesWidget: (value, meta) {
+                            return SideTitleWidget(
+                              meta: meta,
+                              child: Padding(
+                                padding: const .only(top: 16.0),
+                                child: Text(
+                                  value.toInt().addMMM,
+                                  style: Theme.of(context).textTheme.labelLarge
+                                      ?.copyWith(
+                                        color: const Color.fromARGB(
+                                          255,
+                                          34,
+                                          34,
+                                          34,
+                                        ),
+                                        fontWeight: .w600,
+                                        letterSpacing: 1.0,
+                                      ),
+                                ),
+                              ),
+                            );
+                          },
                         ),
                       ),
-                      spots: [
-                        FlSpot(1, 1),
-                        FlSpot(2, 2),
-                        FlSpot(3, 3),
-                        FlSpot(4, 4),
-                        FlSpot(5, 5),
-                        FlSpot(6, 3),
-                        FlSpot(7, 6),
-                        FlSpot(8, 9),
-                        FlSpot(9, 5),
-                        FlSpot(10, 7),
-                        FlSpot(11, 5),
-                      ],
-                      isCurved: true,
-                      curveSmoothness: 0.5,
                     ),
-                  ],
+                    lineBarsData: [
+                      LineChartBarData(
+                        barWidth: 4.0,
+                        dotData: const FlDotData(show: false),
+                        isStrokeCapRound: true,
+                        color: AppColors.beauVert,
+                        isCurved: true,
+                        preventCurveOverShooting: true,
+                        belowBarData: BarAreaData(
+                          show: true,
+                          gradient: const LinearGradient(
+                            begin: .topCenter,
+                            end: .bottomCenter,
+                            colors: [
+                              Color.fromARGB(100, 23, 97, 97),
+                              Color.fromARGB(255, 206, 206, 206),
+                            ],
+                          ),
+                        ),
+                        spots: data.map<FlSpot>((element) {
+                          return FlSpot(
+                            element.month.toDouble(),
+                            element.total,
+                          );
+                        }).toList(),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -154,8 +146,23 @@ PreviewThemeData lightTheme() =>
     PreviewThemeData(materialLight: AppTheme.lightTheme);
 @Preview(size: Size(360, 800), name: "Chart Widget Preview", theme: lightTheme)
 Widget chartWidgetPreview() {
+  List<History> previewData = [
+    History(total: 1000, transactions: 3, month: 1),
+    History(total: 100, transactions: 3, month: 2),
+    History(total: 50000, transactions: 3, month: 3),
+    History(total: 50000, transactions: 3, month: 4),
+    History(total: 50100, transactions: 3, month: 5),
+    History(total: 50, transactions: 3, month: 6),
+    History(total: 1020, transactions: 3, month: 7),
+    History(total: 6020, transactions: 3, month: 9),
+    History(total: 1000, transactions: 3, month: 11),
+  ];
   return Scaffold(
     appBar: AppBar(title: Text("Expense Tracker")),
-    body: const Chart(title: "Spending Velocity", label: "Outflow"),
+    body: Chart(
+      title: "Spending Velocity",
+      label: "Outflow",
+      data: previewData,
+    ),
   );
 }
