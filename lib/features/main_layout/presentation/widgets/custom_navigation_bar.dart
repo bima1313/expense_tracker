@@ -1,5 +1,5 @@
 import 'package:expense_tracker/core/themes/app_colors.dart';
-import 'package:expense_tracker/features/main_layout/getx/controllers/bottom_nav_controller.dart';
+import 'package:expense_tracker/features/main_layout/presentation/getx/controllers/bottom_nav_controller.dart';
 import 'package:expense_tracker/features/main_layout/presentation/widgets/custom_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
