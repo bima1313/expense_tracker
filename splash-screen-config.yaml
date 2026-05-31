@@ -1,0 +1,13 @@
+flutter_native_splash:
+  color: "#318382"
+  image: assets/images/fin-sight.png
+  color_dark: "#121212"
+  image_dark: assets/images/fin-sight.png
+
+  android_12:
+    image: assets/images/fin-sight.png
+    icon_background_color: "#ffffff"
+    image_dark: assets/images/fin-sight.png
+    icon_background_color_dark: "#121212"
+
+  web: false

@@ -17,7 +17,7 @@ class MainLayoutScreen extends GetView<BottomNavController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Expense Tracker")),
+      appBar: AppBar(title: const Text("FinSight")),
       body: GetBuilder<BottomNavController>(
         builder: (controller) {
           return IndexedStack(

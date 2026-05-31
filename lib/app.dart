@@ -3,6 +3,7 @@ import 'package:expense_tracker/features/history/presentation/getx/bindings/hist
 import 'package:expense_tracker/features/home/presentation/getx/bindings/home_binding.dart';
 import 'package:expense_tracker/features/main_layout/presentation/getx/bindings/main_binding.dart';
 import 'package:expense_tracker/features/main_layout/presentation/screens/main_layout_screen.dart';
+import 'package:expense_tracker/features/splash/presentation/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
@@ -12,15 +13,19 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Expense Tracker',
+      title: 'FinSight',
       theme: AppTheme.lightTheme,
       smartManagement: .keepFactory,
+      initialRoute: '/splash-screen',
+      transitionDuration: const Duration(seconds: 1),
+      defaultTransition: .fade,
       getPages: [
         GetPage(
-          name: "/",
+          name: '/',
           page: () => const MainLayoutScreen(),
           bindings: [MainBinding(), HomeBinding(), HistoryBinding()],
         ),
+        GetPage(name: '/splash-screen', page: () => const SplashScreen()),
       ],
     );
   }
